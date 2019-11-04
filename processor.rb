@@ -1,4 +1,4 @@
-require 'pry'
+require 'set'
 require './exceptions.rb'
 class Processor
   
@@ -50,7 +50,7 @@ class Processor
     @ordered_jobs.push(job) unless @ordered_jobs.include?(job)
     job_index = @ordered_jobs.index(job)
     unless @ordered_jobs.include?(dependency_job) && @ordered_jobs.index(dependency_job) < job_index
-      @ordered_jobs.insert(job_index, dependency_job)
+      @ordered_jobs.insert(job_index, dependency_job).uniq!
     end
   end
 
