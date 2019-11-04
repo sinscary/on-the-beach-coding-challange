@@ -1,11 +1,10 @@
 require 'set'
-require './exceptions.rb'
+require './exceptions/exceptions.rb'
 class JobProcessor
   
   def initialize(jobs: {})
     @jobs = jobs
     @ordered_jobs = []
-    @job_queue = []
   end
 
   def validate

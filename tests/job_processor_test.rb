@@ -1,6 +1,6 @@
 require "minitest/autorun"
-require './input_reader'
-require './job_processor'
+require './data_reader/input_reader'
+require './models/job_processor'
 
 describe JobProcessor do
 
