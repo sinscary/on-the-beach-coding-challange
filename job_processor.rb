@@ -1,6 +1,6 @@
 require 'set'
 require './exceptions.rb'
-class Processor
+class JobProcessor
   
   def initialize(jobs: {})
     @jobs = jobs
@@ -25,7 +25,7 @@ class Processor
   def validate_self_dependency
     @jobs.each do|job, dependency_job|
       raise Exceptions::SelfDependencyError.new(
-        "Job can not depend on itself."
+        "A Job can not depend on itself."
       ) if job == dependency_job
     end
   end
