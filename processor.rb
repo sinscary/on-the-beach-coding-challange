@@ -15,9 +15,8 @@ class Processor
 
   def process
     @jobs.each do |job, dependency_job|
-      order_jobs(job, depe ndency_job)
+      order_jobs(job, dependency_job)
     end
-    (@ordered_jobs |= @job_queue).uniq
     @ordered_jobs.join()
   end
 
@@ -37,7 +36,7 @@ class Processor
       job_set = Set.new()
       job_set.add(job)
       current_dependency = dependency
-      while !@jobs[current_dependency].empty?
+      while !@jobs[current_dependency].nil?
         raise Exceptions::CircularDependencyError.new(
           "Circular dependency found"
         ) if job_set.add?(current_dependency).nil?
@@ -48,13 +47,11 @@ class Processor
   end
 
   def order_jobs(job, dependency_job=nil)
-    @job_queue.push(job) if @job_queue.empty?
-    unless dependency_job.nil?
-      @job_queue.unshift(dependency_job)
-      return
+    @ordered_jobs.push(job) unless @ordered_jobs.include?(job)
+    job_index = @ordered_jobs.index(job)
+    unless @ordered_jobs.include?(dependency_job) && @ordered_jobs.index(dependency_job) < job_index
+      @ordered_jobs.insert(job_index, dependency_job)
     end
-    @ordered_jobs |= @job_queue
-    @job_queue = []
   end
 
 end
